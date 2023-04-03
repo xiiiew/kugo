@@ -31,7 +31,7 @@ go get github.com/xiiiew/kugo
 |Place a Margin Order  |POST    | /api/v1/margin/order          |
 |Cancel an Order       |DELETE  | /api/v1/orders/{orderId}      |
 |List Orders           |GET     | /api/v1/orders                |
-|Get an Orders         |GET     | /api/v1/orders/{orderId}      |
+|Get an Order          |GET     | /api/v1/orders/{orderId}      |
 |List Fills            |GET     | /api/v1/fills                 |
 
 </details>
