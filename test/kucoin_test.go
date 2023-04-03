@@ -67,11 +67,25 @@ func TestSpotOrder(t *testing.T) {
 		Symbol:      "BTC-USDT",
 		Type:        "limit",
 		TradeType:   "TRADE",
-		Price:       decimal.NewFromFloat(450000),
+		Price:       decimal.NewFromFloat(10000),
 		Size:        decimal.NewFromFloat(0.00001),
-		TimeInForce: "IOC",
+		TimeInForce: "GTC",
 	}
 	result, err := instance.SpotOrder(req)
+	t.Log(result, err)
+}
+
+func TestMarginSpotOrder(t *testing.T) {
+	req := &kugo.SpotMarginOrderRequest{
+		ClientOid:   "123",
+		Side:        "buy",
+		Symbol:      "BTC-USDT",
+		Type:        "limit",
+		Price:       decimal.NewFromFloat(10000),
+		Size:        decimal.NewFromFloat(0.00001),
+		TimeInForce: "GTC",
+	}
+	result, err := instance.SpotMarginOrder(req)
 	t.Log(result, err)
 }
 
@@ -81,6 +95,30 @@ func TestSpotOrderFills(t *testing.T) {
 		TradeType: "TRADE",
 	}
 	result, err := instance.SpotOrderFills(req, 1, 50)
+	t.Log(result, err)
+}
+
+func TestSpotOrderList(t *testing.T) {
+	req := &kugo.SpotOrderListRequest{
+		Status:    "",
+		Symbol:    "",
+		Side:      "",
+		Type:      "",
+		TradeType: "TRADE",
+		StartAt:   0,
+		EndAt:     0,
+	}
+	result, err := instance.SpotOrderList(req, 1, 10)
+	t.Log(result, err)
+}
+
+func TestSpotOrderOne(t *testing.T) {
+	result, err := instance.SpotOrderOne("642a8cfa926d4e0001c86207")
+	t.Log(result, err)
+}
+
+func TestSpotOrderCancel(t *testing.T) {
+	result, err := instance.SpotOrderCancel("642a8cfa926d4e0001c86207")
 	t.Log(result, err)
 }
 

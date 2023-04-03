@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// Symbols /api/v2/symbols
+// Symbols GET /api/v2/symbols
 func (kc *Kucoin) Symbols(market string) ([]SymbolsData, error) {
 	uri := UriSymbols
 	p := map[string]string{}
@@ -23,7 +23,7 @@ func (kc *Kucoin) Symbols(market string) ([]SymbolsData, error) {
 	if err = json.Unmarshal(resp.Body(), &respStruct); err != nil {
 		return nil, err
 	}
-	if respStruct.Code != "200000" && respStruct.Code != "200" {
+	if respStruct.Code != "200000" && respStruct.Code != "200" || len(respStruct.Msg) != 0 {
 		return nil, errors.New(respStruct.Msg)
 	}
 	return respStruct.Data, nil

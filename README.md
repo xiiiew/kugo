@@ -13,24 +13,44 @@ go get github.com/xiiiew/kugo
 ## REST API Support
 
 <details>
+<summary>Account</summary>
+
+|     DESCRIPTION      | METHOD |             URI               |
+|----------------------|--------|-------------------------------|
+|List Spot Accounts    |GET     | /api/v2/accounts              |
+|List Future Accounts  |GET     | /api/v1/account-overview      |
+
+</details>
+
+<details>
 <summary>Spot</summary>
 
-|             URI               |
-|-------------------------------|
-| /api/v2/symbols               |
-| /api/v1/accounts              |
-| /api/v1/orders                |
-| /api/v1/fills                 |
+|     DESCRIPTION      | METHOD |             URI               |
+|----------------------|--------|-------------------------------|
+|Place a New Order     |POST    | /api/v1/orders                |
+|Place a Margin Order  |POST    | /api/v1/margin/order          |
+|Cancel an Order       |DELETE  | /api/v1/orders/{orderId}      |
+|List Orders           |GET     | /api/v1/orders                |
+|Get an Orders         |GET     | /api/v1/orders/{orderId}      |
+|List Fills            |GET     | /api/v1/fills                 |
 
 </details>
 
 <details>
 <summary>Future</summary>
 
-|             URI               |
-|-------------------------------|
-| /api/v1/account-overview      |
-| /api/v1/orders                |
+|     DESCRIPTION      | METHOD |             URI               |
+|----------------------|--------|-------------------------------|
+|Place an Order        |POST     | /api/v1/orders               |
+
+</details>
+
+<details>
+<summary>Market</summary>
+
+|     DESCRIPTION      | METHOD |             URI               |
+|----------------------|--------|-------------------------------|
+|Get Spot Symbols List |GET     | /api/v2/symbols               |
 
 </details>
 
@@ -77,7 +97,7 @@ instance, err := kugo.NewKucoin(
 			DisableKeepAlives: true},
 			Timeout: 10 * time.Second},
     ),
-),
+)
 
 ```
 

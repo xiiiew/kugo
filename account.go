@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// Accounts /api/v1/account
+// Accounts GET /api/v1/account
 func (kc *Kucoin) Accounts(currency, _type string) ([]AccountsData, error) {
 	uri := UriAccounts
 	p := map[string]string{}
@@ -26,7 +26,7 @@ func (kc *Kucoin) Accounts(currency, _type string) ([]AccountsData, error) {
 	if err = json.Unmarshal(resp.Body(), &respStruct); err != nil {
 		return nil, err
 	}
-	if respStruct.Code != "200000" && respStruct.Code != "200" {
+	if respStruct.Code != "200000" && respStruct.Code != "200" || len(respStruct.Msg) != 0 {
 		return nil, errors.New(respStruct.Msg)
 	}
 	return respStruct.Data, nil

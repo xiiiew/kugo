@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// FutureAccount /api/v1/account-overview
+// FutureAccount GET /api/v1/account-overview
 func (kc *Kucoin) FutureAccount(currency string) (*FutureAccountData, error) {
 	uri := UriFutureAccount
 	p := map[string]string{}
@@ -23,13 +23,13 @@ func (kc *Kucoin) FutureAccount(currency string) (*FutureAccountData, error) {
 	if err = json.Unmarshal(resp.Body(), &respStruct); err != nil {
 		return nil, err
 	}
-	if respStruct.Code != "200000" && respStruct.Code != "200" {
+	if respStruct.Code != "200000" && respStruct.Code != "200" || len(respStruct.Msg) != 0 {
 		return nil, errors.New(respStruct.Msg)
 	}
 	return &respStruct.Data, nil
 }
 
-// FutureOrder /api/v1/orders
+// FutureOrder POST /api/v1/orders
 func (kc *Kucoin) FutureOrder(req *FutureOrderRequest) (*FutureOrderData, error) {
 	uri := UriFutureOrders
 	p, err := json.Marshal(req)
@@ -46,7 +46,7 @@ func (kc *Kucoin) FutureOrder(req *FutureOrderRequest) (*FutureOrderData, error)
 	if err = json.Unmarshal(resp.Body(), &respStruct); err != nil {
 		return nil, err
 	}
-	if respStruct.Code != "200000" && respStruct.Code != "200" {
+	if respStruct.Code != "200000" && respStruct.Code != "200" || len(respStruct.Msg) != 0 {
 		return nil, errors.New(respStruct.Msg)
 	}
 	return &respStruct.Data, nil

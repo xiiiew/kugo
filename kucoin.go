@@ -208,16 +208,15 @@ func (kc *Kucoin) do(endpoint string, method string, uri string, params interfac
 					qs = append(qs, fmt.Sprintf("%s=%s", k, v))
 				}
 				us = fmt.Sprintf("%s?%s", us, strings.Join(qs, "&"))
-
-				u, e := url.Parse(us)
-				if e != nil {
-					err = e
-					return
-				}
-				us = u.String()
-				uri = u.RequestURI()
-				b.WriteString(uri)
 			}
+			u, e := url.Parse(us)
+			if e != nil {
+				err = e
+				return
+			}
+			us = u.String()
+			uri = u.RequestURI()
+			b.WriteString(uri)
 		} else {
 			b.WriteString(uri)
 			if params != nil {
@@ -238,8 +237,14 @@ func (kc *Kucoin) do(endpoint string, method string, uri string, params interfac
 	case http.MethodGet:
 		resp, err = req.Get(us)
 		return
+	case http.MethodDelete:
+		resp, err = req.Delete(us)
+		return
 	case http.MethodPost:
 		resp, err = req.SetBody(body).Post(us)
+		return
+	default:
+		err = errors.New("method error")
 		return
 	}
 	return
