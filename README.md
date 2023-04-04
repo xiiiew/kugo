@@ -14,7 +14,7 @@ go get github.com/xiiiew/kugo
 
 ## REST API Support
 
-<details>
+<details open>
 <summary>Account</summary>
 
 |     DESCRIPTION      | METHOD |             URI               |
@@ -24,7 +24,7 @@ go get github.com/xiiiew/kugo
 
 </details>
 
-<details>
+<details open>
 <summary>Spot</summary>
 
 |     DESCRIPTION      | METHOD |             URI               |
@@ -38,7 +38,7 @@ go get github.com/xiiiew/kugo
 
 </details>
 
-<details>
+<details open>
 <summary>Future</summary>
 
 |     DESCRIPTION      | METHOD |             URI               |
@@ -52,12 +52,13 @@ go get github.com/xiiiew/kugo
 
 </details>
 
-<details>
+<details open>
 <summary>Market</summary>
 
 |     DESCRIPTION      | METHOD |             URI               |
 |----------------------|--------|-------------------------------|
-|Get Spot Symbols List |GET     | /api/v2/symbols               |
+|Get Spot Symbols      |GET     | /api/v2/symbols               |
+|Get Future Symbols    |GET     | /api/v1/contracts/active      |
 
 </details>
 
