@@ -1,5 +1,7 @@
 # KuGo
 
+[![Software License](https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square)](https://github.com/xiiiew/kugo/blob/master/LICENSE)
+
 Go SDK for KuCoin API
 
 > This SDK is currently available for KuCoin V2 API KEY. All API request parameters and response details are described in the documentation at [https://docs.kucoin.com](https://docs.kucoin.com).
@@ -41,7 +43,12 @@ go get github.com/xiiiew/kugo
 
 |     DESCRIPTION      | METHOD |             URI               |
 |----------------------|--------|-------------------------------|
-|Place an Order        |POST     | /api/v1/orders               |
+|Place an Order        |POST    | /api/v1/orders                |
+|Cancel an Order       |DELETE  | /api/v1/orders/{orderId}      |
+|List Orders           |GET     | /api/v1/orders                |
+|Get an Order          |GET     | /api/v1/orders/{orderId}      |
+|List Fills            |GET     | /api/v1/fills                 |
+|Get Position Details  |GET     | /api/v1/position              |
 
 </details>
 
@@ -128,3 +135,12 @@ result, err := instance.SpotOrder(req)
 t.Log(result, err)
 ```
 
+## Contributing
+
+We welcome contributions from anyone! 
+
+## Contact
+
+If you have any questions or concerns about the project, you can contact us at:
+
+* Email: xiiiew@qq.com

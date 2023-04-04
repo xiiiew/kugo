@@ -12,8 +12,12 @@ const (
 	UriSpotOrderCancel = "/api/v1/orders/%s"
 	UriSpotOrderOne    = "/api/v1/orders/%s"
 
-	UriFutureAccount = "/api/v1/account-overview"
-	UriFutureOrders  = "/api/v1/orders"
+	UriFutureAccount     = "/api/v1/account-overview"
+	UriFutureOrders      = "/api/v1/orders"
+	UriFutureOrderCancel = "/api/v1/orders/%s"
+	UriFutureOrderOne    = "/api/v1/orders/%s"
+	UriFutureOrderFills  = "/api/v1/fills"
+	UriFuturePosition    = "/api/v1/position"
 )
 
 type BaseResponse struct {
@@ -145,25 +149,26 @@ type SpotOrderFillsResponse struct {
 }
 type SpotOrderFillsData struct {
 	BaseResponsePagination
-	Items []struct {
-		Symbol         string          `json:"symbol"`
-		TradeId        string          `json:"tradeId"`
-		OrderId        string          `json:"orderId"`
-		CounterOrderId string          `json:"counterOrderId"`
-		Side           string          `json:"side"`
-		Liquidity      string          `json:"liquidity"`
-		ForceTaker     bool            `json:"forceTaker"`
-		Price          decimal.Decimal `json:"price"`
-		Size           decimal.Decimal `json:"size"`
-		Funds          decimal.Decimal `json:"funds"`
-		Fee            decimal.Decimal `json:"fee"`
-		FeeRate        decimal.Decimal `json:"feeRate"`
-		FeeCurrency    string          `json:"feeCurrency"`
-		Stop           string          `json:"stop"`
-		Type           string          `json:"type"`
-		CreatedAt      int64           `json:"createdAt"`
-		TradeType      string          `json:"tradeType"`
-	} `json:"items"`
+	Items []SpotOrderFillsItem `json:"items"`
+}
+type SpotOrderFillsItem struct {
+	Symbol         string          `json:"symbol"`
+	TradeId        string          `json:"tradeId"`
+	OrderId        string          `json:"orderId"`
+	CounterOrderId string          `json:"counterOrderId"`
+	Side           string          `json:"side"`
+	Liquidity      string          `json:"liquidity"`
+	ForceTaker     bool            `json:"forceTaker"`
+	Price          decimal.Decimal `json:"price"`
+	Size           decimal.Decimal `json:"size"`
+	Funds          decimal.Decimal `json:"funds"`
+	Fee            decimal.Decimal `json:"fee"`
+	FeeRate        decimal.Decimal `json:"feeRate"`
+	FeeCurrency    string          `json:"feeCurrency"`
+	Stop           string          `json:"stop"`
+	Type           string          `json:"type"`
+	CreatedAt      int64           `json:"createdAt"`
+	TradeType      string          `json:"tradeType"`
 }
 
 // SpotOrderCancelResponse Response of DELETE /api/v1/orders/{orderId}
@@ -280,4 +285,164 @@ type FutureOrderResponse struct {
 }
 type FutureOrderData struct {
 	OrderId string `json:"orderId"`
+}
+
+// FutureOrderCancelResponse Response of DELETE /api/v1/orders/{orderId}
+type FutureOrderCancelResponse struct {
+	BaseResponse
+	Data FutureOrderCancelData `json:"data"`
+}
+type FutureOrderCancelData struct {
+	CancelledOrderIds []string `json:"cancelledOrderIds"`
+}
+
+// FutureOrderListRequest Request of GET /api/v1/orders
+type FutureOrderListRequest struct {
+	Status  string `json:"status"`  // [Optional] active or done
+	Symbol  string `json:"symbol"`  // [Optional]
+	Side    string `json:"side"`    // [Optional] buy or sell
+	Type    string `json:"type"`    // [Optional] limit, market, limit_stop or market_stop
+	StartAt int64  `json:"startAt"` // [Optional] Start time (millisecond)
+	EndAt   int64  `json:"endAt"`   // [Optional] End time (millisecond)
+}
+
+// FutureOrderListResponse Response of GET /api/v1/orders
+type FutureOrderListResponse struct {
+	BaseResponse
+	Data FutureOrderListData `json:"data"`
+}
+type FutureOrderListData struct {
+	BaseResponsePagination
+	Items []FutureOrderOneData `json:"items"`
+}
+
+// FutureOrderOneResponse Response of GET /api/v1/orders/{order-id}
+type FutureOrderOneResponse struct {
+	BaseResponse
+	Data FutureOrderOneData `json:"data"`
+}
+type FutureOrderOneData struct {
+	Id             string          `json:"id"`
+	Symbol         string          `json:"symbol"`
+	Type           string          `json:"type"`
+	Side           string          `json:"side"`
+	Price          decimal.Decimal `json:"price"`
+	Size           int             `json:"size"` // Cont
+	Value          decimal.Decimal `json:"value"`
+	DealValue      decimal.Decimal `json:"dealValue"`
+	DealSize       decimal.Decimal `json:"dealSize"`
+	Stp            string          `json:"stp"`
+	Stop           string          `json:"stop"`
+	StopPriceType  string          `json:"stopPriceType"`
+	StopTriggered  bool            `json:"stopTriggered"`
+	StopPrice      decimal.Decimal `json:"stopPrice"`
+	TimeInForce    string          `json:"timeInForce"`
+	PostOnly       bool            `json:"postOnly"`
+	Hidden         bool            `json:"hidden"`
+	Iceberg        bool            `json:"iceberg"`
+	Leverage       decimal.Decimal `json:"leverage"`
+	ForceHold      bool            `json:"forceHold"`
+	CloseOrder     bool            `json:"closeOrder"`
+	VisibleSize    decimal.Decimal `json:"visibleSize"`
+	ClientOid      string          `json:"clientOid"`
+	Remark         string          `json:"remark"`
+	Tags           string          `json:"tags"`
+	IsActive       bool            `json:"isActive"`
+	CancelExist    bool            `json:"cancelExist"`
+	CreatedAt      int64           `json:"createdAt"`
+	UpdatedAt      int64           `json:"UpdatedAt"`
+	EndAt          int64           `json:"endAt"`
+	OrderTime      int64           `json:"orderTime"`
+	SettleCurrency string          `json:"SettleCurrency"`
+	Status         string          `json:"status"`
+	FilledSize     decimal.Decimal `json:"filledSize"`
+	FilledValue    decimal.Decimal `json:"filledValue"`
+	ReduceOnly     bool            `json:"reduceOnly"`
+}
+
+// FutureOrderFillsRequest Request of GET /api/v1/fills
+type FutureOrderFillsRequest struct {
+	OrderId string `json:"orderId,omitempty"` // If you specify orderId, other parameters can be ignored
+	Symbol  string `json:"symbol,omitempty"`
+	Side    string `json:"side,omitempty"`    // buy or sell
+	Type    string `json:"type,omitempty"`    // limit, market, limit_stop or market_stop
+	StartAt int64  `json:"startAt,omitempty"` // Start time (millisecond)
+	EndAt   int64  `json:"endAt,omitempty"`   // End time (millisecond)
+}
+
+// FutureOrderFillsResponse Response of GET /api/v1/fills
+type FutureOrderFillsResponse struct {
+	BaseResponse
+	Data FutureOrderFillsData `json:"data"`
+}
+type FutureOrderFillsData struct {
+	BaseResponsePagination
+	Items []FutureOrderFillsItem `json:"items"`
+}
+type FutureOrderFillsItem struct {
+	Symbol         string          `json:"symbol"`
+	TradeId        string          `json:"tradeId"`
+	OrderId        string          `json:"orderId"`
+	Side           string          `json:"side"`
+	Liquidity      string          `json:"liquidity"`
+	ForceTaker     bool            `json:"forceTaker"`
+	Price          decimal.Decimal `json:"price"`
+	Size           int             `json:"size"` // Cont
+	Value          decimal.Decimal `json:"value"`
+	FeeRate        decimal.Decimal `json:"feeRate"`
+	FixFee         decimal.Decimal `json:"fixFee"`
+	FeeCurrency    string          `json:"feeCurrency"`
+	Stop           string          `json:"stop"`
+	Fee            decimal.Decimal `json:"fee"`
+	OrderType      string          `json:"orderType"`
+	TradeType      string          `json:"tradeType"` // trade, liquidation, ADL or settlement
+	CreatedAt      int64           `json:"createdAt"`
+	SettleCurrency string          `json:"settleCurrency"`
+	TradeTime      int64           `json:"tradeTime"`
+}
+
+// FuturePositionResponse Response of /api/v1/position
+type FuturePositionResponse struct {
+	BaseResponse
+	Data FuturePositionData `json:"data"`
+}
+type FuturePositionData struct {
+	Id                string          `json:"id"`
+	Symbol            string          `json:"symbol"`
+	AutoDeposit       bool            `json:"autoDeposit"`
+	MaintMarginReq    decimal.Decimal `json:"maintMarginReq"`
+	RiskLimit         int             `json:"riskLimit"`
+	RealLeverage      decimal.Decimal `json:"realLeverage"`
+	CrossMode         bool            `json:"crossMode"`
+	DelevPercentage   decimal.Decimal `json:"delevPercentage"`
+	OpeningTimestamp  int64           `json:"openingTimestamp"`
+	CurrentTimestamp  int64           `json:"currentTimestamp"`
+	CurrentQty        int             `json:"currentQty"`
+	CurrentCost       decimal.Decimal `json:"currentCost"`
+	CurrentComm       decimal.Decimal `json:"currentComm"`
+	UnrealisedCost    decimal.Decimal `json:"unrealisedCost"`
+	RealisedGrossCost decimal.Decimal `json:"realisedGrossCost"`
+	RealisedCost      decimal.Decimal `json:"realisedCost"`
+	IsOpen            bool            `json:"isOpen"`
+	MarkPrice         decimal.Decimal `json:"markPrice"`
+	MarkValue         decimal.Decimal `json:"markValue"`
+	PosCost           decimal.Decimal `json:"posCost"`
+	PosCross          decimal.Decimal `json:"posCross"`
+	PosInit           decimal.Decimal `json:"posInit"`
+	PosComm           decimal.Decimal `json:"posComm"`
+	PosLoss           decimal.Decimal `json:"posLoss"`
+	PosMargin         decimal.Decimal `json:"posMargin"`
+	PosMaint          decimal.Decimal `json:"posMaint"`
+	MaintMargin       decimal.Decimal `json:"maintMargin"`
+	RealisedGrossPnl  decimal.Decimal `json:"realisedGrossPnl"`
+	RealisedPnl       decimal.Decimal `json:"realisedPnl"`
+	UnrealisedPnl     decimal.Decimal `json:"unrealisedPnl"`
+	UnrealisedPnlPcnt decimal.Decimal `json:"unrealisedPnlPcnt"`
+	UnrealisedRoePcnt decimal.Decimal `json:"unrealisedRoePcnt"`
+	AvgEntryPrice     decimal.Decimal `json:"avgEntryPrice"`
+	LiquidationPrice  decimal.Decimal `json:"liquidationPrice"`
+	BankruptPrice     decimal.Decimal `json:"bankruptPrice"`
+	SettleCurrency    string          `json:"settleCurrency"`
+	MaintainMargin    decimal.Decimal `json:"maintainMargin"`
+	RiskLimitLevel    int             `json:"riskLimitLevel"`
 }

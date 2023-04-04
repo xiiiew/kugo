@@ -14,13 +14,13 @@ var instance *kugo.Kucoin
 
 const (
 	spotEndpoint = "https://openapi-sandbox.kucoin.com"
-	accessKey    = "accessKey"
-	secretKey    = "secretKey"
+	accessKey    = "642249d9ba02b40001f932ef"
+	secretKey    = "6c9c2b68-bd17-421f-a809-26c4a53e1321"
 	passphrase   = "12345678"
 
 	futureEndpoint   = "https://api-sandbox-futures.kucoin.com"
-	futureAccessKey  = "accessKey"
-	futureSecretKey  = "secretKey"
+	futureAccessKey  = "6424fc96ba02b40001f93932"
+	futureSecretKey  = "2b0503c1-c781-430a-85f3-fa2bd1ff656e"
 	futurePassphrase = "12345678"
 )
 
@@ -29,7 +29,6 @@ func TestMain(m *testing.M) {
 	i, err := kugo.NewKucoin(
 		kugo.SetSpotEndpoint(spotEndpoint),
 		kugo.SetFutureEndpoint(futureEndpoint),
-		kugo.SetApiKey(accessKey, secretKey, passphrase),
 		kugo.SetDebug(true),
 		kugo.SetClient(&http.Client{Transport: &http.Transport{
 			Proxy:             http.ProxyURL(uProxy),
@@ -45,6 +44,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestSymbols(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	symbols, err := instance.Symbols("USDS")
 	if err != nil {
 		t.Fatal(err)
@@ -53,6 +53,7 @@ func TestSymbols(t *testing.T) {
 }
 
 func TestAccounts(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	accounts, err := instance.Accounts("BTC", "trade")
 	if err != nil {
 		t.Fatal(err)
@@ -61,6 +62,7 @@ func TestAccounts(t *testing.T) {
 }
 
 func TestSpotOrder(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	req := &kugo.SpotOrdersRequest{
 		ClientOid:   "123",
 		Side:        "buy",
@@ -76,6 +78,7 @@ func TestSpotOrder(t *testing.T) {
 }
 
 func TestMarginSpotOrder(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	req := &kugo.SpotMarginOrderRequest{
 		ClientOid:   "123",
 		Side:        "buy",
@@ -90,6 +93,7 @@ func TestMarginSpotOrder(t *testing.T) {
 }
 
 func TestSpotOrderFills(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	req := &kugo.SpotOrderFillsRequest{
 		//OrderId:   "6424f39e926d4e0001c14029",
 		TradeType: "TRADE",
@@ -99,6 +103,7 @@ func TestSpotOrderFills(t *testing.T) {
 }
 
 func TestSpotOrderList(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	req := &kugo.SpotOrderListRequest{
 		Status:    "",
 		Symbol:    "",
@@ -113,11 +118,13 @@ func TestSpotOrderList(t *testing.T) {
 }
 
 func TestSpotOrderOne(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	result, err := instance.SpotOrderOne("642a8cfa926d4e0001c86207")
 	t.Log(result, err)
 }
 
 func TestSpotOrderCancel(t *testing.T) {
+	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
 	result, err := instance.SpotOrderCancel("642a8cfa926d4e0001c86207")
 	t.Log(result, err)
 }
@@ -137,12 +144,54 @@ func TestFutureOrder(t *testing.T) {
 	req := &kugo.FutureOrderRequest{
 		ClientOid:   "123",
 		Side:        "buy",
-		Symbol:      "ETH-USDT",
+		Symbol:      "ETHUSDTM",
+		Leverage:    decimal.NewFromFloat(1),
 		Type:        "limit",
-		Price:       decimal.NewFromFloat(40),
+		Price:       decimal.NewFromFloat(1800),
 		Size:        1,
-		TimeInForce: "IOC",
+		TimeInForce: "GTC",
 	}
 	result, err := instance.FutureOrder(req)
+	t.Log(result, err)
+}
+
+func TestFutureOrderCancel(t *testing.T) {
+	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
+	result, err := instance.FutureOrderCancel("642b807bcac00c0001177123")
+	t.Log(result, err)
+}
+
+func TestFutureOrderList(t *testing.T) {
+	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
+	req := &kugo.FutureOrderListRequest{
+		Status:  "",
+		Symbol:  "",
+		Side:    "",
+		Type:    "",
+		StartAt: 0,
+		EndAt:   0,
+	}
+	result, err := instance.FutureOrderList(req, 1, 10)
+	t.Log(result, err)
+}
+
+func TestFutureOrderOne(t *testing.T) {
+	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
+	result, err := instance.FutureOrderOne("642b807bcac00c0001177123")
+	t.Log(result, err)
+}
+
+func TestFutureOrderFills(t *testing.T) {
+	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
+	req := &kugo.FutureOrderFillsRequest{
+		//OrderId:   "6424f39e926d4e0001c14029",
+	}
+	result, err := instance.FutureOrderFills(req, 1, 50)
+	t.Log(result, err)
+}
+
+func TestFuturePosition(t *testing.T) {
+	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
+	result, err := instance.FuturePosition("XBTUSDTM")
 	t.Log(result, err)
 }
