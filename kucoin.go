@@ -142,7 +142,7 @@ func SetResponseLog(l func(...interface{})) Option {
 		if l == nil {
 			return errors.New("logger is nil")
 		}
-		kc.reqLog = l
+		kc.respLog = l
 		return nil
 	}
 }
