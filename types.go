@@ -4,8 +4,8 @@ import "github.com/shopspring/decimal"
 
 // URI
 const (
-	UriSymbols         = "/api/v2/symbols"
-	UriAccounts        = "/api/v1/accounts"
+	UriSpotSymbols     = "/api/v2/symbols"
+	UriSpotAccount     = "/api/v1/accounts"
 	UriSpotOrders      = "/api/v1/orders"
 	UriSpotMarginOrder = "/api/v1/margin/order"
 	UriSpotOrderFills  = "/api/v1/fills"
@@ -18,6 +18,7 @@ const (
 	UriFutureOrderOne    = "/api/v1/orders/%s"
 	UriFutureOrderFills  = "/api/v1/fills"
 	UriFuturePosition    = "/api/v1/position"
+	UriFutureSymbols     = "/api/v1/contracts/active"
 )
 
 type BaseResponse struct {
@@ -445,4 +446,67 @@ type FuturePositionData struct {
 	SettleCurrency    string          `json:"settleCurrency"`
 	MaintainMargin    decimal.Decimal `json:"maintainMargin"`
 	RiskLimitLevel    int             `json:"riskLimitLevel"`
+}
+
+// FutureSymbolResponse Response of /api/v1/contracts/active
+type FutureSymbolResponse struct {
+	BaseResponse
+	Data []FutureSymbolData `json:"data"`
+}
+type FutureSymbolData struct {
+	Symbol                  string          `json:"symbol"`
+	RootSymbol              string          `json:"rootSymbol"`
+	Type                    string          `json:"type"`
+	FirstOpenDate           int64           `json:"firstOpenDate"`
+	ExpireDate              interface{}     `json:"expireDate"`
+	SettleDate              interface{}     `json:"settleDate"`
+	BaseCurrency            string          `json:"baseCurrency"`
+	QuoteCurrency           string          `json:"quoteCurrency"`
+	SettleCurrency          string          `json:"settleCurrency"`
+	MaxOrderQty             decimal.Decimal `json:"maxOrderQty"`
+	MaxPrice                decimal.Decimal `json:"maxPrice"`
+	LotSize                 decimal.Decimal `json:"lotSize"`
+	TickSize                decimal.Decimal `json:"tickSize"`
+	IndexPriceTickSize      decimal.Decimal `json:"indexPriceTickSize"`
+	Multiplier              decimal.Decimal `json:"multiplier"`
+	InitialMargin           decimal.Decimal `json:"initialMargin"`
+	MaintainMargin          decimal.Decimal `json:"maintainMargin"`
+	MaxRiskLimit            decimal.Decimal `json:"maxRiskLimit"`
+	MinRiskLimit            decimal.Decimal `json:"minRiskLimit"`
+	RiskStep                decimal.Decimal `json:"riskStep"`
+	MakerFeeRate            decimal.Decimal `json:"makerFeeRate"`
+	TakerFeeRate            decimal.Decimal `json:"takerFeeRate"`
+	TakerFixFee             decimal.Decimal `json:"takerFixFee"`
+	MakerFixFee             decimal.Decimal `json:"makerFixFee"`
+	SettlementFee           decimal.Decimal `json:"settlementFee"`
+	IsDeleverage            bool            `json:"isDeleverage"`
+	IsQuanto                bool            `json:"isQuanto"`
+	IsInverse               bool            `json:"isInverse"`
+	MarkMethod              string          `json:"markMethod"`
+	FairMethod              string          `json:"fairMethod"`
+	FundingBaseSymbol       string          `json:"fundingBaseSymbol"`
+	FundingQuoteSymbol      string          `json:"fundingQuoteSymbol"`
+	FundingRateSymbol       string          `json:"fundingRateSymbol"`
+	IndexSymbol             string          `json:"indexSymbol"`
+	SettlementSymbol        string          `json:"settlementSymbol"`
+	Status                  string          `json:"status"`
+	FundingFeeRate          decimal.Decimal `json:"fundingFeeRate"`
+	PredictedFundingFeeRate decimal.Decimal `json:"predictedFundingFeeRate"`
+	OpenInterest            decimal.Decimal `json:"openInterest"`
+	TurnoverOf24H           decimal.Decimal `json:"turnoverOf24h"`
+	VolumeOf24H             decimal.Decimal `json:"volumeOf24h"`
+	MarkPrice               decimal.Decimal `json:"markPrice"`
+	IndexPrice              decimal.Decimal `json:"indexPrice"`
+	LastTradePrice          decimal.Decimal `json:"lastTradePrice"`
+	NextFundingRateTime     decimal.Decimal `json:"nextFundingRateTime"`
+	MaxLeverage             decimal.Decimal `json:"maxLeverage"`
+	SourceExchanges         []string        `json:"sourceExchanges"`
+	PremiumsSymbol1M        string          `json:"premiumsSymbol1M"`
+	PremiumsSymbol8H        string          `json:"premiumsSymbol8H"`
+	FundingBaseSymbol1M     string          `json:"fundingBaseSymbol1M"`
+	FundingQuoteSymbol1M    string          `json:"fundingQuoteSymbol1M"`
+	LowPrice                decimal.Decimal `json:"lowPrice"`
+	HighPrice               decimal.Decimal `json:"highPrice"`
+	PriceChgPct             decimal.Decimal `json:"priceChgPct"`
+	PriceChg                decimal.Decimal `json:"priceChg"`
 }

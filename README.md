@@ -114,7 +114,7 @@ instance, err := kugo.NewKucoin(
 
 ```golang
 // Spot symbols
-symbols, err := instance.Symbols("USDS")
+symbols, err := instance.SpotSymbols("USDS")
 if err != nil {
     t.Fatal(err)
 }

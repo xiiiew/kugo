@@ -14,13 +14,13 @@ var instance *kugo.Kucoin
 
 const (
 	spotEndpoint = "https://openapi-sandbox.kucoin.com"
-	accessKey    = "642249d9ba02b40001f932ef"
-	secretKey    = "6c9c2b68-bd17-421f-a809-26c4a53e1321"
+	accessKey    = "accessKey"
+	secretKey    = "secretKey"
 	passphrase   = "12345678"
 
 	futureEndpoint   = "https://api-sandbox-futures.kucoin.com"
-	futureAccessKey  = "6424fc96ba02b40001f93932"
-	futureSecretKey  = "2b0503c1-c781-430a-85f3-fa2bd1ff656e"
+	futureAccessKey  = "accessKey"
+	futureSecretKey  = "secretKey"
 	futurePassphrase = "12345678"
 )
 
@@ -43,9 +43,9 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestSymbols(t *testing.T) {
+func TestSpotSymbols(t *testing.T) {
 	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
-	symbols, err := instance.Symbols("USDS")
+	symbols, err := instance.SpotSymbols("USDS")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -54,7 +54,7 @@ func TestSymbols(t *testing.T) {
 
 func TestAccounts(t *testing.T) {
 	instance.Set(kugo.SetApiKey(accessKey, secretKey, passphrase))
-	accounts, err := instance.Accounts("BTC", "trade")
+	accounts, err := instance.SpotAccount("BTC", "trade")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -193,5 +193,11 @@ func TestFutureOrderFills(t *testing.T) {
 func TestFuturePosition(t *testing.T) {
 	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
 	result, err := instance.FuturePosition("XBTUSDTM")
+	t.Log(result, err)
+}
+
+func TestFutureSymbols(t *testing.T) {
+	instance.Set(kugo.SetApiKey(futureAccessKey, futureSecretKey, futurePassphrase))
+	result, err := instance.FutureSymbols()
 	t.Log(result, err)
 }
