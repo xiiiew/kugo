@@ -19,8 +19,8 @@ go get github.com/xiiiew/kugo
 
 |     DESCRIPTION      | METHOD |             URI               |
 |----------------------|--------|-------------------------------|
-|List Spot Accounts    |GET     | /api/v2/accounts              |
-|List Future Accounts  |GET     | /api/v1/account-overview      |
+|List Spot Accounts    |GET     | [/api/v2/accounts](https://docs.kucoin.com/#list-accounts)              |
+|List Future Accounts  |GET     | [/api/v1/account-overview](https://docs.kucoin.com/futures/#get-account-overview)      |
 
 </details>
 
@@ -29,12 +29,12 @@ go get github.com/xiiiew/kugo
 
 |     DESCRIPTION      | METHOD |             URI               |
 |----------------------|--------|-------------------------------|
-|Place a New Order     |POST    | /api/v1/orders                |
-|Place a Margin Order  |POST    | /api/v1/margin/order          |
-|Cancel an Order       |DELETE  | /api/v1/orders/{orderId}      |
-|List Orders           |GET     | /api/v1/orders                |
-|Get an Order          |GET     | /api/v1/orders/{orderId}      |
-|List Fills            |GET     | /api/v1/fills                 |
+|Place a New Order     |POST    | [/api/v1/orders](https://docs.kucoin.com/#place-a-new-order)                |
+|Place a Margin Order  |POST    | [/api/v1/margin/order](https://docs.kucoin.com/#place-a-margin-order)          |
+|Cancel an Order       |DELETE  | [/api/v1/orders/{orderId}](https://docs.kucoin.com/#cancel-an-order)      |
+|List Orders           |GET     | [/api/v1/orders](https://docs.kucoin.com/#list-orders)                |
+|Get an Order          |GET     | [/api/v1/orders/{orderId}](https://docs.kucoin.com/#get-an-order)      |
+|List Fills            |GET     | [/api/v1/fills](https://docs.kucoin.com/#list-fills)                 |
 
 </details>
 
@@ -43,12 +43,12 @@ go get github.com/xiiiew/kugo
 
 |     DESCRIPTION      | METHOD |             URI               |
 |----------------------|--------|-------------------------------|
-|Place an Order        |POST    | /api/v1/orders                |
-|Cancel an Order       |DELETE  | /api/v1/orders/{orderId}      |
-|List Orders           |GET     | /api/v1/orders                |
-|Get an Order          |GET     | /api/v1/orders/{orderId}      |
-|List Fills            |GET     | /api/v1/fills                 |
-|Get Position Details  |GET     | /api/v1/position              |
+|Place an Order        |POST    | [/api/v1/orders](https://docs.kucoin.com/futures/#place-an-order)                |
+|Cancel an Order       |DELETE  | [/api/v1/orders/{orderId}](https://docs.kucoin.com/futures/#cancel-an-order)      |
+|List Orders           |GET     | [/api/v1/orders](https://docs.kucoin.com/futures/#get-order-list)                |
+|Get an Order          |GET     | [/api/v1/orders/{orderId}](https://docs.kucoin.com/futures/#get-details-of-a-single-order)      |
+|List Fills            |GET     | [/api/v1/fills](https://docs.kucoin.com/futures/#get-fills)                 |
+|Get Position Details  |GET     | [/api/v1/position](https://docs.kucoin.com/futures/#get-position-details)              |
 
 </details>
 
@@ -57,8 +57,8 @@ go get github.com/xiiiew/kugo
 
 |     DESCRIPTION      | METHOD |             URI               |
 |----------------------|--------|-------------------------------|
-|Get Spot Symbols      |GET     | /api/v2/symbols               |
-|Get Future Symbols    |GET     | /api/v1/contracts/active      |
+|Get Spot Symbols      |GET     | [/api/v2/symbols](https://docs.kucoin.com/futures/#get-open-contract-list)               |
+|Get Future Symbols    |GET     | [/api/v1/contracts/active](https://docs.kucoin.com/#get-symbols-list)      |
 
 </details>
 
