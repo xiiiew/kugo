@@ -2,7 +2,7 @@
 
 [![Software License](https://img.shields.io/badge/License-MIT-orange.svg?style=flat-square)](https://github.com/xiiiew/kugo/blob/master/LICENSE)
 
-Go SDK for KuCoin API
+The Best Go SDK for KuCoin API
 
 > This SDK is currently available for KuCoin V2 API KEY. All API request parameters and response details are described in the documentation at [https://docs.kucoin.com](https://docs.kucoin.com).
 
